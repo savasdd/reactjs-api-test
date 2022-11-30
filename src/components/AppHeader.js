@@ -45,6 +45,11 @@ class AppHeader extends React.Component {
       dispatch({ type: SIDEBAR_SHOW, data: { sidebarShow: val } });
     };
 
+    const toggleSidebarMobile = () => {
+      const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive';
+      dispatch({ type: SIDEBAR_SHOW, data: { sidebarShow: val } });
+    };
+
 
     return (
       <CHeader position="sticky" className="mb-4">
