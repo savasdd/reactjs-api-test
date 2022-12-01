@@ -1,6 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
+  cilAccountLogout,
   cilDrop,
   cilList,
   cilNotes,
@@ -29,11 +30,6 @@ const _nav = [
         name: 'Sınav',
         to: '/base/sinav',
       },
-      {
-        component: CNavItem,
-        name: 'Login',
-        to: '/login',
-      },
 
       // {
       //   component: CNavItem,
@@ -41,6 +37,12 @@ const _nav = [
       //   to: '/500',
       // },
     ],
+  },
+  {
+    component: CNavItem,
+    name: 'Çıkış Yap',
+    to: '/login',
+    icon: <CIcon icon={cilAccountLogout} customClassName="nav-icon" />,
   },
   // {
   //   component: CNavItem,

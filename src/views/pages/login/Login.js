@@ -15,33 +15,41 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import { connect } from 'react-redux'
 
 class Login extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {
+      username: undefined,
+      password: undefined
+    }
+
   }
 
   render() {
-    const { username, password } = this.state
+    const { username, password } = this.state;
+    const { dispatch, state } = this.props
 
-    const login = () => {
-      console.log(username)
-      console.log(password)
-
-    }
 
     const onUsername = (e) => {
-      this.setState = {
-        username: e,
-      }
+      this.setState({
+        username: e
+      });
     }
 
     const onPassword = (e) => {
-      this.setState = {
-        password: e,
-      }
+      this.setState({
+        password: e
+      });
     }
+
+    const Login = () => {
+      console.log(username)
+      console.log(password)
+      window.location = '/';
+    }
+
 
     return (
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -60,6 +68,7 @@ class Login extends React.Component {
                         <CInputGroupText>
                           <CIcon icon={cilUser} />
                         </CInputGroupText>
+
                         <CFormInput
                           type="text"
                           placeholder="Kullanıcı adı"
@@ -82,7 +91,7 @@ class Login extends React.Component {
                       </CInputGroup>
                       <CRow>
                         <CCol xs={12} className="text-center">
-                          <CButton color="primary" onClick={login} className="px-4">
+                          <CButton color="primary" onClick={Login} className="px-4">
                             Giriş Yap
                           </CButton>
                         </CCol>
@@ -99,4 +108,17 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+function mapStateToProps(state) {
+  return {
+    state: state,
+  }
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch: dispatch
+  }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
