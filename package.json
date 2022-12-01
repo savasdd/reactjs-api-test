@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
+    "api-generate": "openapi-generator-cli generate -i http://localhost:8086/v3/api-docs -g typescript-angular -o ./src/app/core/osym-service-api"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.0.0",
