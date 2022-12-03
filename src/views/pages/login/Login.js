@@ -47,7 +47,46 @@ class Login extends React.Component {
     const Login = () => {
       console.log(username)
       console.log(password)
-      window.location = '/';
+      const dto = {
+        username: username,
+        password: password
+      };
+
+      fetch('http://localhost:8085/api/auth',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': ' *',
+            "Access-Control-Allow-Credentials": true
+          },
+          body: JSON.stringify(dto)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.access_token);
+          getSinav(data.access_token);
+        });
+
+
+      //window.location = '/';
+    }
+
+    const getSinav = (token) => {
+      fetch('http://localhost:8085/api/sinavs',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': ' *',
+            "Access-Control-Allow-Credentials": true,
+            'Authorization': 'Bearer ' + token,
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+        });
     }
 
 

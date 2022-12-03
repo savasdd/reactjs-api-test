@@ -21,7 +21,7 @@
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
-    "api-generate": "openapi-generator-cli generate -i http://localhost:8086/v3/api-docs -g typescript-angular -o ./src/app/core/osym-service-api"
+    "api-generate": "openapi -i http://localhost:8085/v3/api-docs/api -o ./src/core/sinav-api"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.0.0",
@@ -35,6 +35,7 @@
     "classnames": "^2.3.1",
     "core-js": "^3.24.1",
     "font-awesome": "^4.7.0",
+    "openapi-react": "^0.0.34",
     "primeicons": "^6.0.1",
     "primereact": "^8.7.2",
     "prop-types": "^15.8.1",
