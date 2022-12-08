@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -12,83 +12,78 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
-import { connect } from 'react-redux'
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilLockLocked, cilUser } from "@coreui/icons";
+import { connect } from "react-redux";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: undefined,
-      password: undefined
-    }
-
+      password: undefined,
+    };
   }
 
   render() {
     const { username, password } = this.state;
-    const { dispatch, state } = this.props
-
+    const { dispatch, state } = this.props;
 
     const onUsername = (e) => {
       this.setState({
-        username: e
+        username: e,
       });
-    }
+    };
 
     const onPassword = (e) => {
       this.setState({
-        password: e
+        password: e,
       });
-    }
+    };
 
     const Login = () => {
-      console.log(username)
-      console.log(password)
+      console.log(username);
+      console.log(password);
       const dto = {
         username: username,
-        password: password
+        password: password,
       };
 
-      fetch('http://localhost:8085/api/auth',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': ' *',
-            "Access-Control-Allow-Credentials": true
-          },
-          body: JSON.stringify(dto)
-        })
-        .then(response => response.json())
-        .then(data => {
+      fetch("http://localhost:8085/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": " *",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify(dto),
+      })
+        .then((response) => response.json())
+        .then((data) => {
           console.log(data.access_token);
+          if (data.access_token != null) {
+            window.location = "/";
+          }
           getSinav(data.access_token);
         });
-
-
-      //window.location = '/';
-    }
+    };
 
     const getSinav = (token) => {
-      fetch('http://localhost:8085/api/sinavs',
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': ' *',
-            "Access-Control-Allow-Credentials": true,
-            'Authorization': 'Bearer ' + token,
-          },
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
+      fetch("http://localhost:8085/api/sinavs", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": " *",
+          "Access-Control-Allow-Credentials": true,
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
         });
-    }
-
+    };
 
     return (
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -130,7 +125,11 @@ class Login extends React.Component {
                       </CInputGroup>
                       <CRow>
                         <CCol xs={12} className="text-center">
-                          <CButton color="primary" onClick={Login} className="px-4">
+                          <CButton
+                            color="primary"
+                            onClick={Login}
+                            className="px-4"
+                          >
                             Giriş Yap
                           </CButton>
                         </CCol>
@@ -143,21 +142,20 @@ class Login extends React.Component {
           </CRow>
         </CContainer>
       </div>
-    )
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
     state: state,
-  }
-};
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch: dispatch
-  }
-};
-
+    dispatch: dispatch,
+  };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
