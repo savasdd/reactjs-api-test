@@ -16,12 +16,13 @@ import {
 import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
 import { connect } from "react-redux";
+import { isLogin } from "src/core/token-service";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: undefined,
+      username: "savas.dede@",
       password: undefined,
     };
   }
@@ -50,39 +51,10 @@ class Login extends React.Component {
         password: password,
       };
 
-      fetch("http://localhost:8085/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": " *",
-          "Access-Control-Allow-Credentials": true,
-        },
-        body: JSON.stringify(dto),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.access_token);
-          if (data.access_token != null) {
-            window.location = "/";
-          }
-          getSinav(data.access_token);
-        });
-    };
-
-    const getSinav = (token) => {
-      fetch("http://localhost:8085/api/sinavs", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": " *",
-          "Access-Control-Allow-Credentials": true,
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
+      const data = isLogin(dto);
+      data.then((m) => {
+        console.log(m.access_token);
+      });
     };
 
     return (
