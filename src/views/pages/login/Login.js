@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -17,106 +17,102 @@ import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
 import { connect } from "react-redux";
 import { isLogin } from "src/core/token-service";
+import useAuth from "src/core/hooks/use-auth";
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "savas.dede@",
-      password: undefined,
-    };
-  }
+const Login = () => {
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = data;
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  render() {
-    const { username, password } = this.state;
-    const { dispatch, state } = this.props;
+  const changeHandler = (e) => {
+    setData({ ...data, [e.target.name]: [e.target.value] });
+  };
 
-    const onUsername = (e) => {
-      this.setState({
-        username: e,
-      });
-    };
-
-    const onPassword = (e) => {
-      this.setState({
-        password: e,
-      });
+  const Login = (e) => {
+    e.preventDefault();
+    const dto = {
+      username: data.username[0],
+      password: data.password[0],
     };
 
-    const Login = () => {
-      console.log(username);
-      console.log(password);
-      const dto = {
-        username: username,
-        password: password,
-      };
+    const response = isLogin(dto);
+    response.then((resp) => {
+      const accessToken = resp.access_token;
+      const roles = ["SINAV_ROLU"];
+      const user = data.username[0];
+      const pwd = data.password[0];
+      setAuth({ user, pwd, roles, accessToken });
+      navigate(from, { replace: true });
+    });
+  };
 
-      const data = isLogin(dto);
-      data.then((m) => {
-        console.log(m.access_token);
-      });
-    };
+  return (
+    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+      <CContainer>
+        <CRow className="justify-content-center">
+          <CCol md={4}>
+            <CCardGroup>
+              <CCard className="p-4">
+                <CCardBody>
+                  <CForm>
+                    <div className="align-items-center">
+                      <h5 className="text-center">SINAV SONUÇ SORGULAMA</h5>
+                    </div>
+                    <br />
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>
+                        <CIcon icon={cilUser} />
+                      </CInputGroupText>
 
-    return (
-      <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-        <CContainer>
-          <CRow className="justify-content-center">
-            <CCol md={4}>
-              <CCardGroup>
-                <CCard className="p-4">
-                  <CCardBody>
-                    <CForm>
-                      <div className="align-items-center">
-                        <h5 className="text-center">SINAV SONUÇ SORGULAMA</h5>
-                      </div>
-                      <br />
-                      <CInputGroup className="mb-3">
-                        <CInputGroupText>
-                          <CIcon icon={cilUser} />
-                        </CInputGroupText>
-
-                        <CFormInput
-                          type="text"
-                          placeholder="Kullanıcı adı"
-                          value={username}
-                          onChange={(e) => onUsername(e.target.value)}
-                          autoComplete="username"
-                        />
-                      </CInputGroup>
-                      <CInputGroup className="mb-4">
-                        <CInputGroupText>
-                          <CIcon icon={cilLockLocked} />
-                        </CInputGroupText>
-                        <CFormInput
-                          type="password"
-                          placeholder="Şifre"
-                          value={password}
-                          onChange={(e) => onPassword(e.target.value)}
-                          autoComplete="current-password"
-                        />
-                      </CInputGroup>
-                      <CRow>
-                        <CCol xs={12} className="text-center">
-                          <CButton
-                            color="primary"
-                            onClick={Login}
-                            className="px-4"
-                          >
-                            Giriş Yap
-                          </CButton>
-                        </CCol>
-                      </CRow>
-                    </CForm>
-                  </CCardBody>
-                </CCard>
-              </CCardGroup>
-            </CCol>
-          </CRow>
-        </CContainer>
-      </div>
-    );
-  }
-}
+                      <CFormInput
+                        type="text"
+                        placeholder="Kullanıcı adı"
+                        name="username"
+                        value={username}
+                        onChange={changeHandler}
+                        autoComplete="username"
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-4">
+                      <CInputGroupText>
+                        <CIcon icon={cilLockLocked} />
+                      </CInputGroupText>
+                      <CFormInput
+                        type="password"
+                        placeholder="Şifre"
+                        name="password"
+                        value={password}
+                        onChange={changeHandler}
+                        autoComplete="current-password"
+                      />
+                    </CInputGroup>
+                    <CRow>
+                      <CCol xs={12} className="text-center">
+                        <CButton
+                          color="primary"
+                          onClick={Login}
+                          className="px-4"
+                        >
+                          Giriş Yap
+                        </CButton>
+                      </CCol>
+                    </CRow>
+                  </CForm>
+                </CCardBody>
+              </CCard>
+            </CCardGroup>
+          </CCol>
+        </CRow>
+      </CContainer>
+    </div>
+  );
+};
 
 function mapStateToProps(state) {
   return {
