@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
-const Sinav = React.lazy(() => import('./views/pages/sinav/Sinav'))
+const Sinav = React.lazy(() => import('./views/pages/sinav/sinav'))
 
 const routes = [
   { path: '/', exact: true, name: 'Anasayfa' },

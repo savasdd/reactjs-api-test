@@ -1,22 +1,6 @@
 import React from 'react'
-import {
-  CAvatar,
-  CButton,
-  CButtonGroup,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardHeader,
-  CCol,
-  CProgress,
-  CRow,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-} from '@coreui/react'
+import { CCard, CCardBody, } from '@coreui/react'
+import SinavList from './sinav-list'
 
 class Sinav extends React.Component {
   constructor(props) {
@@ -24,13 +8,15 @@ class Sinav extends React.Component {
   }
 
   render() {
+
+
+
+
     return (
       <>
-        <CCard className="mb-4">
-          <CCardBody>
-            <div>Sinav List</div>
-          </CCardBody>
-        </CCard>
+        <div>
+          <SinavList />
+        </div>
       </>
     )
   }

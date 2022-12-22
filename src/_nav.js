@@ -30,12 +30,6 @@ const _nav = [
         name: 'Sınav',
         to: '/base/sinav',
       },
-
-      // {
-      //   component: CNavItem,
-      //   name: 'Error 500',
-      //   to: '/500',
-      // },
     ],
   },
   {
