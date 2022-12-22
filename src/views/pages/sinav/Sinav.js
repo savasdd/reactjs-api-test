@@ -9,9 +9,6 @@ class Sinav extends React.Component {
 
   render() {
 
-
-
-
     return (
       <>
         <div>

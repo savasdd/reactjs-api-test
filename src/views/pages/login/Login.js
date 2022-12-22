@@ -18,6 +18,7 @@ import { cilLockLocked, cilUser } from "@coreui/icons";
 import { connect } from "react-redux";
 import { isLogin } from "src/core/token-service";
 import useAuth from "src/core/hooks/use-auth";
+import { TOASTR_MESSAGE } from "src/core/actions/Type";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -34,6 +35,12 @@ const Login = () => {
     setData({ ...data, [e.target.name]: [e.target.value] });
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      Login(e);
+    }
+  }
+
   const Login = (e) => {
     e.preventDefault();
     const dto = {
@@ -49,6 +56,9 @@ const Login = () => {
       const pwd = data.password[0];
       setAuth({ user, pwd, roles, accessToken });
       navigate(from, { replace: true });
+    }).catch((error) => {
+      console.log("Hata!");
+      //dispatch({ type: TOASTR_MESSAGE, data: { type: 'success', message: 'Kayıt Yapıldı!' } });
     });
   };
 
@@ -90,6 +100,7 @@ const Login = () => {
                         value={password}
                         onChange={changeHandler}
                         autoComplete="current-password"
+                        onKeyDown={handleKeyDown}
                       />
                     </CInputGroup>
                     <CRow>
