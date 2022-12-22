@@ -2,6 +2,7 @@ import React from "react";
 import { CCard, CCardBody, } from '@coreui/react';
 import { connect } from 'react-redux';
 import { TOASTR_MESSAGE } from "src/core/actions/Type";
+import { getToken } from "src/core/token-service";
 
 class SinavList extends React.Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class SinavList extends React.Component {
         const { dispatch } = this.props;
 
         const deneme = () => {
+            console.log(getToken());
             dispatch({ type: TOASTR_MESSAGE, data: { type: 'success', message: 'Kayıt Yapıldı!' } });
         };
 

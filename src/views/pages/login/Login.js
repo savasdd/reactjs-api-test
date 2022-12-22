@@ -16,7 +16,7 @@ import {
 import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
 import { connect } from "react-redux";
-import { isLogin } from "src/core/token-service";
+import { isLogin, setToken, setUser } from "src/core/token-service";
 import useAuth from "src/core/hooks/use-auth";
 import { TOASTR_MESSAGE } from "src/core/actions/Type";
 
@@ -55,6 +55,8 @@ const Login = () => {
       const user = data.username[0];
       const pwd = data.password[0];
       setAuth({ user, pwd, roles, accessToken });
+      setToken(accessToken);
+      setUser(data.username[0]);
       navigate(from, { replace: true });
     }).catch((error) => {
       console.log("Hata!");

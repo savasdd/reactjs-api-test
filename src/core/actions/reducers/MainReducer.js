@@ -1,5 +1,5 @@
 import { Map } from 'immutable'
-import { GET_MENU, GRID_EDIT_MODE, SHOW_LOAD, SIDEBAR_SHOW, TOASTR_MESSAGE, TOASTR_REFRESH, TOKEN } from "../Type";
+import { GET_MENU, GRID_EDIT_MODE, SHOW_LOAD, SIDEBAR_SHOW, TOASTR_MESSAGE, TOASTR_REFRESH } from "../Type";
 
 let initialState = {
     showSidebar: true,
@@ -42,11 +42,6 @@ export default function mainReducer(state = Map(initialState), action) {
         case GET_MENU:
             return state.merge({
                 menu: action.data.menu
-            });
-
-        case TOKEN:
-            return state.merge({
-                token: action.token
             });
 
         default:

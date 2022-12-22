@@ -19,6 +19,7 @@ import { logo } from 'src/assets/brand/logo'
 import {
   SIDEBAR_SHOW
 } from "../../src/core/actions/Type";
+import { getUser } from 'src/core/token-service'
 
 
 class AppHeader extends React.Component {
@@ -26,18 +27,20 @@ class AppHeader extends React.Component {
     super(props);
     this.state = {
       sidebarShow: 'responsive',
+      username: getUser(),
     }
   }
 
   async componentWillReceiveProps(nextProps) {
     this.setState({
       sidebarShow: nextProps.state.main.get('sidebarShow'),
+
     });
   }
 
 
   render() {
-    const { sidebarShow } = this.state;
+    const { sidebarShow, username } = this.state;
     const { dispatch, state } = this.props;
 
     const toggleSidebar = () => {
@@ -71,7 +74,7 @@ class AppHeader extends React.Component {
             </CNavItem>
           </CHeaderNav>
           <CHeaderNav>
-            Özlem Göker
+            {username}
             {/* <CNavItem>
             <CNavLink href="#">
               <CIcon icon={cilBell} size="lg" />
